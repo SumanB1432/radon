@@ -59,7 +59,7 @@ router.get('/sol1',function(req,res){
     }
     let missingNumber=sum-sum2
     console.log("Missinf Number of the array is="+missingNumber)
-    res.send(missingNumber);
+    res.sendStatus(missingNumber);
 })
 
 
