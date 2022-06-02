@@ -1,4 +1,5 @@
 const express = require('express');
+const underscore=require('underscore');
 const externalModule = require('../logger/logger')
 const externalModule2 = require('../util/helper')
 const externalModule3=require('../validator/formatter')
@@ -16,6 +17,8 @@ router.get('/test-me', function (req, res) {
     externalModule3.trim()
     externalModule3.changetoLowerCase()
     externalModule3.changeToUpperCase()
+    let firstElement=underscore.first(['suman','karishma'])
+    console.log("First element is :"+firstElement)
     res.send('My first ever api!')
    
 });
