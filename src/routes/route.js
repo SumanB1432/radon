@@ -45,22 +45,22 @@ router.get('/GET/movies',function(req,res){
 })
 router.get('/GET/movies/:indexNumber',function(req,res){
 let movies=[{indexNumber:1,movieName:'Rang de basanti' },{ indexNumber:2,movieName:'The shininh'},{indexNumber:3,movieName:'Lord of the rings'},{indexNumber:4,movieName:'Batman begins'}]
-let a=underscore.indexBy(movies,'indexNumber')
+let a=underscore.findIndex(movies,'indexNumber')
 res.send(a)
 })
-router.get('/sol1',function(req,res){
-    let a=[1,2,3,5,6,7];
-    let size=a.length;
-    let n=a[size-1];
-    let sum=(n*(n+1))/2;
-    let sum2=0;
-    for(let i=0;i<size;i++){
-      sum2=sum2+a[i];
-    }
-    let missingNumber=sum-sum2
-    console.log("Missinf Number of the array is="+missingNumber)
-    res.sendStatus(missingNumber);
-})
+// router.get('/sol1',function(req,res){
+//     let a=[1,2,3,5,6,7];
+//     let size=a.length;
+//     let n=a[size-1];
+//     let sum=(n*(n+1))/2;
+//     let sum2=0;
+//     for(let i=0;i<size;i++){
+//       sum2=sum2+a[i];
+//     }
+//     let missingNumber=sum-sum2
+//     console.log("Missinf Number of the array is="+missingNumber)
+//     res.sendStatus(missingNumber);
+// })
 
 
 module.exports = router;
