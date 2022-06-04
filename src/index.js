@@ -1,5 +1,5 @@
 const express = require('express');
-// const {default:mongoose}=require('mongoose');
+const {default:mongoose}=require('mongoose');
 const bodyParser = require('body-parser');
 const route = require('./routes/route.js');
 const app = express();
@@ -7,9 +7,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', route);
-// mongoose.connect("mongodb+srv://suman111:Loveyouma1432@cluster0.n3h1g.mongodb.net/sumanbera?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology:true})
-// .then(( )=>console.log("MongoDB is connected"))
-// .catch((err) =>console.log(err));
+mongoose.connect("mongodb+srv://Suman-1432:Suman1432@cluster0.bkkfmpr.mongodb.net/sumanbera",{useNewUrlParser:true,useUnifiedTopology:true})
+.then(( )=>console.log("MongoDB is connected"))
+.catch((err) =>console.log(err));
 
 
 
