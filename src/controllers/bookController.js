@@ -1,13 +1,13 @@
-const UserModel= require("../models/bookModel")
+const bookModel= require("../models/bookModel.js")
 
-const createBook= async function (req, res) {
+const createBook= async function (req,res) {
     let data= req.body
-    let savedData= await bookModel.create(data)
-    res.send({msg: savedData})
+    let saveData = await bookModel.create(data)
+    res.send({msg: saveData})
 }
 
 const getBooksData= async function (req, res) {
-    let allBooks= await bookModel.find()
+    let allBooks = await bookModel.find()
     res.send({msg: allBooks})
 }
 

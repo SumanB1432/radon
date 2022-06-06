@@ -3,13 +3,14 @@ const { stringify } = require('nodemon/lib/utils');
 
 const bookSchema = new mongoose.Schema( {
   bookName:{
-      type:string,
-      require:true,
+      type:String,
+      unique:true,
+      required:true,
   },
-  authorName:string,
+  authorName:String,
   category:{
-      type:string,
-      enum :['horror','Drama','Advanture']
+      type:String,
+      enum :['horror','Drama','Advanture'],
   },
   year:{
       type:Number,
@@ -17,7 +18,7 @@ const bookSchema = new mongoose.Schema( {
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('Book', bookSchema) //users
+module.exports = mongoose.model('Book', bookSchema) //books
 
 
 
