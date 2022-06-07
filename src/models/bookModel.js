@@ -7,19 +7,20 @@ const bookSchema = new mongoose.Schema( {
     
     
     prices: {
-        indianPrice: String,
-        europePrice: String,
+        indianPrice: Number,
+        europePrice: Number,
     },
     year:{
         type:Number,
-        default:2021,
+        default:'2021',
+        
     },
     totalPages:Number,
     stockAvailable:Boolean
 }, { timestamps: true });
 
 
-module.exports = mongoose.model('Book', bookSchema) 
+module.exports = mongoose.model('Book', bookSchema) //books
 
 //Validation:
 //require:true
