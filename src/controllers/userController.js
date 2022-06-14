@@ -1,14 +1,14 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
-const createUser = async function (abcd, xyz) {
+const createUser = async function (req, res) {
   //You can name the req, res objects anything.
   //but the first parameter is always the request 
   //the second parameter is always the response
-  let data = abcd.body;
+  let data = req.body;
   let savedData = await userModel.create(data);
-  console.log(abcd.newAtribute);
-  xyz.send({ msg: savedData });
+  
+  res.send({ msg: savedData });
 };
 
 const loginUser = async function (req, res) {
@@ -31,7 +31,7 @@ const loginUser = async function (req, res) {
   let token = jwt.sign(
     {
       userId: user._id.toString(),
-      batch: "thorium",
+      batch: "radon",
       organisation: "FunctionUp",
     },
     "functionup-radon"
@@ -71,20 +71,41 @@ const updateUser = async function (req, res) {
 // Check if the token is present
 // Check if the token present is a valid token
 // Return a different error message in both these cases
-
+  let header=req.headers["x-auth-token"]
+  if(header){
   let userId = req.params.userId;
   let user = await userModel.findById(userId);
   //Return an error if no user with the given id exists in the db
-  if (!user) {
-    return res.send("No such user exists");
-  }
+       if (!user) {
+         return res.send("No such user exists");
+        }
 
   let userData = req.body;
   let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData);
   res.send({ status: updatedUser, data: updatedUser });
+      }
+  else{
+    res.send("importent header is missing")
+  }
 };
+const deleteUser = async function(req,res){
+  let header= req.headers["x-auth-token"]
+  if(header){
+    let userId = req.params.userId;
+    let user = await  userModel.findById(userId)
+      if(!user){
+        res.send("No such user exists")
+      }
+   let deletedUser= await userModel.findOneAndUpdate({_id:userId},{ $set:{isDeleted:true}},)
+   res.send({status:deletedUser,data:deletedUser})
+  }
+  else{
+    res.send("importent headers is missing")
+  }
+}
 
 module.exports.createUser = createUser;
 module.exports.getUserData = getUserData;
 module.exports.updateUser = updateUser;
 module.exports.loginUser = loginUser;
+module.exports.deleteUser=deleteUser
