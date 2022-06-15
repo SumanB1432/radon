@@ -1,10 +1,10 @@
 const jwt = require("jsonwebtoken")
 const userModel =require("../models/userModel")
-const authenticate = function(req, req, next) {
+const authenticate = async function(req, req, next) {
     //check the token in request header
     //validate this token
-    let token = req.headers
-    if(!token){
+    let header = req.headers["x-auth-token"]
+    if(!header){
         res.sen({status:false,msg:"importent header is missing"})
     }
    next()
