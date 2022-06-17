@@ -77,9 +77,87 @@ let getOtp = async function (req, res) {
         res.status(500).send({ msg: err.message })
     }
 }
+let getSession = async function (req, res) {
+    try {
+        let id = req.query.district_Id
+        let date = req.query.date
+        console.log(`date is:${date}`)
+        let options = {
+            method: "get",
+            url: `http://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=${id}&date=${date}`
+            
+        }
+        let result = await axios(options);
+        let data = result.data
+        res.status(200).send({ msg: data, status: true })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).send({ msg: err.message })
+    }
+}
+let getWeather = async function(req,res){
+    try{
+        let cities =["Bengaluru","Mumbai", "Delhi", "Kolkata", "Chennai", "London", "Moscow"]
+        let cityObjectArray=[]
+        for(let i=0;i<cities.length;i++){
+            let obj={city:cities[i]}
+            let respond = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${cities[i]}&appid=854a4c15735d5e80cafcdaed05dda846`)
+            console.log(respond.data.main.temp)
+            obj.temp = respond.data.main.temp
+            cityObjectArray.push(obj)
+            
+        }
+        let sorted = cityObjectArray.sort(function(a,b) {return a.temp - b.temp})
+        console.log(sorted)
+        res.status(200).send({status:true,data:sorted})
+    }
+catch(err){
+    res.status(500).send({msg:"Server Not Respond"})
+}
+}
+let getMemes =async function(req,res){
+    try{
+    let options={
+        method:`get`,
+        url:"http://api.imgflip.com/get_memes"
+    }
+    let respond = await axios(options)
+    let data = respond.data
+    res.status(200).send({msg:data})
+}
+catch(err){
+  res.status(500).send({msg:"Server Not Respond"})
+}}
+let getMemesById = async function(req,res){
+    try{
+        let template_id = req.query.template_id;
+        let text0 = req.query.text0;
+        let text1= req.query.text1;
+        let username = req.query.username;
+        let password = req.query.password
+
+
+        let options = {
+            method:`post`,
+            url:`https://api.imgflip.com/caption_image?template_id=${template_id}&text0=${text0}&text1=${text1}&username=${username}&password=${password}`
+
+        }
+        let respond = await axios(options)
+        let data = respond.data
+        res.status(200).send({status:true, msg:data})
+    }
+    catch(err){
+        res.status(500).send("Server Not Respond")
+    }
+}
 
 
 module.exports.getStates = getStates
 module.exports.getDistricts = getDistricts
 module.exports.getByPin = getByPin
 module.exports.getOtp = getOtp
+module.exports .getSession=getSession
+module.exports.getWeather=getWeather
+module.exports.getMemes= getMemes
+module.exports.getMemesById=getMemesById
